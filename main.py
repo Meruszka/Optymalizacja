@@ -1,0 +1,17 @@
+from Grafy import *
+
+G = GrafSkierowany()
+G.dodaj_wierzcholek(1)
+G.dodaj_wierzcholek(2)
+G.dodaj_wierzcholek(3)
+G.dodaj_wierzcholek(4)
+G.dodaj_wierzcholek(5)
+G.dodaj_krawedz(1, 2)
+G.dodaj_krawedz(1, 3)
+G.dodaj_krawedz(2, 3)
+G.dodaj_krawedz(2, 4)
+G.dodaj_krawedz(3, 4)
+G.dodaj_krawedz(3, 5)
+G.dodaj_krawedz(4, 5)
+G.dodaj_krawedz(5, 1)
+G.wypisz()
