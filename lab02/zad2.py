@@ -20,7 +20,7 @@ g = [
     [1, 0, 1, 0, 1], 
     [1, 0, 0, 1, 0]]
 
-
+# Zadanie 1, 3 (sposób naiwny i wyświetlenie cylku C3)
 def znajdz_cykl_c3_macierz(g):
     for w1 in range(len(g)):
         for w2 in range(len(g)):
@@ -30,11 +30,14 @@ def znajdz_cykl_c3_macierz(g):
                 if w3 == w1 or w3 == w2:
                     continue
                 if g[w1][w2] > 0 and g[w2][w3] > 0 and g[w3][w1] > 0:
+                    print(w1, w2, w3)
                     return True
     return False
 
-print(znajdz_cykl_c3_macierz(g))
+print(znajdz_cykl_c3_macierz(graf.wypisz_macierz_sasiedztwa()))
 
+
+# Zadanie 2 (sposób w oparciu o mnożenie macierzy)
 def podniesc_macierz_do_potegi(g, n):
     if n == 0:
         return g
@@ -50,6 +53,7 @@ def pomnoz_macierz(m1, m2):
                 wynik[i][j] += m1[i][k] * m2[k][j]
     return wynik
 
+
 def znajdz_cykl_c3_macierz_potegi(g):
     potega = podniesc_macierz_do_potegi(g, 3)
     for wiersz in potega:
@@ -59,4 +63,4 @@ def znajdz_cykl_c3_macierz_potegi(g):
         tmp += potega[i][i]
     return tmp/6 > 0
     
-print(znajdz_cykl_c3_macierz_potegi(g))
+print(znajdz_cykl_c3_macierz_potegi(graf.wypisz_macierz_sasiedztwa()))
