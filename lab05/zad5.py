@@ -4,17 +4,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-random.seed(0)
-graph = [[0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-         [1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-         [1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-         [0, 1, 1, 0, 1, 1, 0, 0, 0, 0],
-         [0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
-         [0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
-         [0, 0, 0, 0, 1, 1, 0, 1, 1, 1],
-         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0]]
+graph = [[0, 7, 0, 5, 0, 0, 0],
+        [7, 0, 8, 9, 7, 0, 0],
+        [0, 8, 0, 0, 5, 0, 0],
+        [5, 9, 0, 0, 15, 6, 0],
+        [0, 7, 5, 15, 0, 8, 9],
+        [0, 0, 0, 6, 8, 0, 11],
+        [0, 0, 0, 0, 9, 11, 0]]
 
 
 def sort_edges(graph):
@@ -27,13 +23,6 @@ def sort_edges(graph):
     edges.sort(key=lambda x: x[2])
     return edges
 
-def set_random_weights(graph):
-    for i in range(len(graph)):
-        for j in range(len(graph)):
-            if graph[i][j] > 0:
-                graph[i][j] = random.randint(1, 10)
-                graph[j][i] = graph[i][j]
-    return graph
 
 def root(node, parent):
     while parent[node] != node:
@@ -60,13 +49,12 @@ def print_graph(graph):
             print(graph[i][j], end=" ")
         print()
 
-g = set_random_weights(graph)
-edges, suma = kruskal(g)
-print_graph(g)
+edges, suma = kruskal(graph)
+print_graph(graph)
 
 print(edges)
 print(suma)
-G = nx.from_numpy_matrix(np.matrix(g), create_using=nx.Graph)
+G = nx.from_numpy_matrix(np.matrix(graph), create_using=nx.Graph)
 layout = nx.spring_layout(G)
 nx.draw(G, layout, with_labels=True)
 nx.draw_networkx_edge_labels(G, layout)
@@ -79,6 +67,3 @@ layout1 = nx.spring_layout(X)
 nx.draw(X, with_labels=True)
 nx.draw_networkx_edge_labels(X, layout1)
 plt.show()
-
-
-    
