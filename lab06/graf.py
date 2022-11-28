@@ -58,3 +58,22 @@ g.dodajKrawedz(2, 5, 14)
 g.dodajKrawedz(2, 4, 10)
 for i in g.macierzSasiedztwa:
     print(i)
+
+print()
+
+g = GrafNieskierowanyWazony(5, 6)
+g.dodajWierzcholek(0)
+g.dodajWierzcholek(1)
+g.dodajWierzcholek(2)
+g.dodajWierzcholek(3)
+g.dodajWierzcholek(4)
+
+g.dodajKrawedz(0, 1, 1)
+g.dodajKrawedz(0, 2, 2)
+g.dodajKrawedz(0, 3, 3)
+g.dodajKrawedz(0, 4, 4)
+g.dodajKrawedz(1, 2, 5)
+g.dodajKrawedz(3, 4, 6)
+
+for i in g.macierzSasiedztwa:
+    print(i)

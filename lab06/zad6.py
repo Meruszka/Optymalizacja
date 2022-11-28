@@ -18,6 +18,12 @@ graph3 = [[0, 3, 0, 0, 0, 4],
           [0, 0, 10, 9, 0, 6],
           [4, 8, 14, 0, 6, 0]]
 
+graph4 = [[0, 1, 2, 3, 4],
+          [1, 0, 5, 0, 0],
+          [2, 5, 0, 0, 0],
+          [3, 0, 0, 0, 6],
+          [4, 0, 0, 6, 0]]
+
 
 def sum_edges(graph):
     w_sum = 0
@@ -29,7 +35,7 @@ def sum_edges(graph):
 
 
 def dijktra(graph, source, dest):
-    shortest = [0 for i in range(len(graph))]
+    shortest = [0 for _ in range(len(graph))]
     selected = [source]
     l = len(graph)
     # Base case from source
@@ -100,8 +106,11 @@ def gen_pairs(odds):
 
 def Chinese_Postman(graph):
     odds = get_odd(graph)
+    path = []
     if(len(odds) == 0):
-        return sum_edges(graph)
+        for i in range(len(graph)):
+            path.append(dijktra(graph, 0, i))
+        return sum_edges(graph), "No odd degree vertices", path
     pairs = gen_pairs(odds)
     l = (len(pairs)+1)//2
 
@@ -132,7 +141,6 @@ def Chinese_Postman(graph):
 
     get_pairs(pairs)
     min_sums = []
-
     for i in pairings_sum:
         s = 0
         for j in range(len(i)):
@@ -147,3 +155,4 @@ def Chinese_Postman(graph):
 print('Chinese Postman Distance is:', Chinese_Postman(graph))
 print('Chinese Postman Distance is:', Chinese_Postman(graph2))
 print('Chinese Postman Distance is:', Chinese_Postman(graph3))
+print('Chinese Postman Distance is:', Chinese_Postman(graph4))
