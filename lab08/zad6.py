@@ -1,9 +1,5 @@
 import networkx as nx
-
-graph2 = [[0, 8, 8, 3],
-          [8, 0, 3, 7],
-          [8, 3, 0, 6],
-          [3, 7, 6, 0]]
+import random
 
 def get_degree(graph):
     degrees = []
@@ -173,14 +169,26 @@ def christofides(graph):
         tour = fleury(make_graph_from_edges(graph, mst_edges))
 
         # remove duplicate vertices
-        tour = list(dict.fromkeys(tour))
+        if tour is not None:
+            tour = list(dict.fromkeys(tour))
+            return tour
+        else:
+            return None
 
-        return tour
-
+def create_random_graph(n):
+    graph = [[0 for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if i != j and graph[i][j] == 0:
+                waga = random.randint(1, 10)
+                graph[i][j] = waga
+                graph[j][i] = waga
+    return graph
 
 def main():
+    random.seed(0)
     print("Christofides algorithm:")
-    print(christofides(graph2))
+    print(christofides(create_random_graph(10)))
 
 if __name__ == "__main__":
     main()
