@@ -6,10 +6,6 @@ graph = [[0, 7, 0, 5, 0, 0, 0],
          [0, 0, 0, 6, 8, 0, 11],
          [0, 0, 0, 0, 9, 11, 0]]
 
-graph2 = [[0, 8, 8, 3],
-          [8, 0, 3, 7],
-          [8, 3, 0, 6],
-          [3, 7, 6, 0]]
 
 graph3 = [[0, 3, 0, 0, 0, 4],
           [3, 0, 5, 0, 0, 8],
@@ -24,6 +20,10 @@ graph4 = [[0, 1, 2, 3, 4],
           [3, 0, 0, 0, 6],
           [4, 0, 0, 6, 0]]
 
+graph2 = [[0, 8, 8, 3],
+          [8, 0, 3, 7],
+          [8, 3, 0, 6],
+          [3, 7, 6, 0]]
 
 def sum_edges(graph):
     w_sum = 0
@@ -54,7 +54,6 @@ def dijktra(graph, source, dest):
                 if(shortest[i] < min_sel):
                     min_sel = shortest[i]
                     ind = i
-
     if(source == dest):
         return 0
     # Dijktra's in Play
@@ -75,8 +74,7 @@ def dijktra(graph, source, dest):
                     ind = j
         min_sel = temp_min
         selected.append(ind)
-
-    return shortest[dest]
+    return shortest[dest], selected
 
 # Finding odd degree vertices in graph
 
@@ -106,11 +104,9 @@ def gen_pairs(odds):
 
 def Chinese_Postman(graph):
     odds = get_odd(graph)
-    path = []
+    # If there are no odd degree vertices
     if(len(odds) == 0):
-        for i in range(len(graph)):
-            path.append(dijktra(graph, 0, i))
-        return sum_edges(graph), "No odd degree vertices", path
+        return sum_edges(graph)
     pairs = gen_pairs(odds)
     l = (len(pairs)+1)//2
 
@@ -141,18 +137,24 @@ def Chinese_Postman(graph):
 
     get_pairs(pairs)
     min_sums = []
+    paths = []
     for i in pairings_sum:
         s = 0
+        path = []
         for j in range(len(i)):
-            s += dijktra(graph, i[j][0], i[j][1])
+            d = dijktra(graph, i[j][0], i[j][1])
+            s += d[0]
+            path.append(d[1])
+        paths.append(path)
         min_sums.append(s)
-
+    index = min_sums.index(min(min_sums))
+    min_path = paths[index]
     added_dis = min(min_sums)
     chinese_dis = added_dis + sum_edges(graph)
-    return chinese_dis
+    return chinese_dis, min_path
 
 
 print('Chinese Postman Distance is:', Chinese_Postman(graph))
-print('Chinese Postman Distance is:', Chinese_Postman(graph2))
 print('Chinese Postman Distance is:', Chinese_Postman(graph3))
 print('Chinese Postman Distance is:', Chinese_Postman(graph4))
+print('Chinese Postman Distance is:', Chinese_Postman(graph2))

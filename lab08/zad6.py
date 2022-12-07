@@ -61,7 +61,7 @@ def count_edges(graph):
         for j in range(len(graph)):
             if graph[i][j] > 0:
                 edges += 1
-    return edges
+    return edges//2
 
 def kruskal(graph):
     edges = sort_edges(graph)
@@ -90,8 +90,16 @@ def isSemiEulerian(graph):
             odd += 1
     return odd == 2
 
+def isFull(graph):
+    for i in range(len(graph)):
+        for j in range(len(graph)):
+            if graph[i][j] == 0 and i != j:
+                return False
+    return True
+
 def fleury(graph):
     if not isEulerian(graph) and not isSemiEulerian(graph):
+        print("Graph is not Eulerian or Semi-Eulerian")
         return None
     graph_copy = graph[:]
     degrees = get_degree(graph_copy)
@@ -103,8 +111,7 @@ def fleury(graph):
                     current = i
                     break
     tour = [current]
-    while len(tour) <= count_edges(graph_copy):
-        print(current, tour)
+    while len(tour) < count_edges(graph_copy):
         if degrees[current] == 1:
             for i in range(len(graph_copy[current])):
                 if graph_copy[current][i] > 0:
@@ -143,15 +150,15 @@ def fleury(graph):
                         # update degrees
                         degrees[current] += 1
                         degrees[i] += 1
+                        
     return tour
 
 
 def christofides(graph):
+        if not isFull(graph):
+            return None
         # get minimum spanning tree
-        mst_edges = kruskal(graph) 
-
-        # get odd vertices in minimum spanning tree
-        mst_odd_vertices = odd_vertices(mst_edges)
+        mst_edges = kruskal(graph)
 
         # form subgraph containing odd vertices
         oddGraph = make_graph_from_edges(graph, mst_edges)
@@ -161,7 +168,7 @@ def christofides(graph):
         nxgraph = convert_to_nx(oddGraph)
         matching = nx.algorithms.min_weight_matching(nxgraph)
 
-        # add edges from matching to mst
+        # add edges from matching to minimum spanning tree
         for edge in matching:
             mst_edges.append((edge[0], edge[1], oddGraph[edge[0]][edge[1]]))
         
@@ -173,7 +180,7 @@ def christofides(graph):
             tour = list(dict.fromkeys(tour))
             return tour
         else:
-            return None
+            return 'Nie ma rozwiązania'
 
 def create_random_graph(n):
     graph = [[0 for _ in range(n)] for _ in range(n)]
