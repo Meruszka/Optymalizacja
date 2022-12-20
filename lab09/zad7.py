@@ -1,5 +1,3 @@
-import time
-
 def karatsuba(x, y):
     if x < 10 or y < 10:
         return x * y
@@ -19,14 +17,8 @@ def karatsuba(x, y):
 def test():
     x = 123456789012345678901234567890
     y = 987654321098765432109876543210
-    start = time.time()
     print(karatsuba(x, y))
-    end = time.time()
-    print(end - start)
+    print
 
-    start = time.time()
-    print(x * y)
-    end = time.time()
-    print(end - start)
 
 test()
